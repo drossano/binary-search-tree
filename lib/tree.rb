@@ -28,7 +28,16 @@ class Tree
       insert(value, root.right_child)
     end
   end
-  
+
+  def delete(value)
+    # search for value
+    # return nil if value can't be found
+    # if value is leaf, set root child to nil
+    # if value has one child, point root to child, point value to nil
+    # if value has two children, find inorder successor to node 
+      # copy contents of inorder successor to node and delete in order successor
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
