@@ -9,7 +9,6 @@ class Tree
   end
 
   def build_tree(array, array_end, array_start = 0)
-    #binding.pry
     return nil if array_start > array_end
     mid = (array_start + array_end) / 2
     root = Node.new(array[mid])
@@ -18,6 +17,18 @@ class Tree
     @root = root
   end
 
+  def insert(value, root = @root)
+    if value == root.data
+      value
+    elsif value < root.data
+      root.left_child = Node.new(value) if root.left_child.nil?
+      insert(value, root.left_child)
+    elsif value > root.data
+      root.right_child = Node.new(value) if root.right_child.nil?
+      insert(value, root.right_child)
+    end
+  end
+  
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
