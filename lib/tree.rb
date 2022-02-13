@@ -29,13 +29,34 @@ class Tree
     end
   end
 
-  def delete(value)
-    # search for value
-    # return nil if value can't be found
-    # if value is leaf, set root child to nil
-    # if value has one child, point root to child, point value to nil
-    # if value has two children, find inorder successor to node 
-      # copy contents of inorder successor to node and delete in order successor
+  def delete(value, root = @root)
+    if root.nil?
+      value
+    elsif value < root.data
+      if root.left_child.data == value
+        if root.left_child.left_child.nil? && root.left_child.right_child.nil?
+          root.left_child = nil
+        end
+      end
+      delete(value, root.left_child)
+    elsif value > root.data
+      if root.right_child.data == value
+        if root.right_child.left_child.nil? && root.right_child.right_child.nil?
+          root.right_child = nil
+        end
+      end
+      delete(value, root.right_child)
+    end
+  end
+
+  def find(value, node = @root)
+    if node.data == nil || node.data == value
+      node
+    elsif value < node.data
+      find(value, node.left_child)
+    elsif value > node.data
+      find(value, node.right_child)
+    end
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
