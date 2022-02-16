@@ -31,22 +31,31 @@ class Tree
 
   def delete(value, root = @root)
     if root.nil?
-      value
+      root
     elsif value < root.data
-      if root.left_child.data == value
-        if root.left_child.left_child.nil? && root.left_child.right_child.nil?
-          root.left_child = nil
-        end
-      end
-      delete(value, root.left_child)
+      root.left_child = delete(value, root.left_child)
     elsif value > root.data
-      if root.right_child.data == value
-        if root.right_child.left_child.nil? && root.right_child.right_child.nil?
-          root.right_child = nil
-        end
+      root.right_child = delete(value, root.right_child)
+    else
+      if root.left_child.nil?
+        return root.right_child
+      elsif root.right_child.nil?
+        return root.left_child
+      else
+        root.data = get_in_order_sucessor(root.right_child)
+        root.right_child = delete(root.data, root.right_child)
       end
-      delete(value, root.right_child)
     end
+    root
+  end
+
+  def get_in_order_sucessor(root)
+    in_order = root.data
+    until root.left_child.nil?
+      in_order = root.left_child.data
+      root = root.left_child
+    end
+    in_order
   end
 
   def find(value, node = @root)
