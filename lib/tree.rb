@@ -87,6 +87,32 @@ class Tree
     array
   end
 
+  def level_order_rec(node = @root, array = [])
+    if node.nil?
+      array
+    else
+      #array.push(node.data)
+      array.push(node.left_child.data) unless node.left_child.nil?
+      array.push(node.right_child.data) unless node.right_child.nil?
+      level_order_rec(node.right_child, array)
+      level_order_rec(node.left_child, array)
+    end
+  end
+
+  def inorder(node = @root, array = [])
+    if node.nil?
+      array
+    else
+      inorder(node.left_child, array)
+      if block_given?
+        yield node
+      else
+        array.push(node.data)
+      end
+      inorder(node.right_child, array)
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
