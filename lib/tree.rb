@@ -101,6 +101,34 @@ class Tree
     end
   end
 
+  def preorder(node = @root, array = [])
+    if node.nil?
+      array
+    else
+      if block_given?
+        yield node
+      else
+        array.push(node.data)
+      end
+      preorder(node.left_child, array)
+      preorder(node.right_child, array)
+    end
+  end
+
+  def postorder(node = @root, array = [])
+    if node.nil?
+      array
+    else
+      postorder(node.left_child, array)
+      postorder(node.right_child, array)
+      if block_given?
+        yield node
+      else
+        array.push(node.data)
+      end
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
