@@ -87,21 +87,21 @@ class Tree
     array
   end
 
-  def inorder(node = @root, array = [])
+  def inorder(node = @root, array = [], &block)
     if node.nil?
       array
     else
-      inorder(node.left_child, array)
+      inorder(node.left_child, array, &block)
       if block_given?
         yield node
       else
         array.push(node.data)
       end
-      inorder(node.right_child, array)
+      inorder(node.right_child, array, &block)
     end
   end
 
-  def preorder(node = @root, array = [])
+  def preorder(node = @root, array = [], &block)
     if node.nil?
       array
     else
@@ -110,17 +110,17 @@ class Tree
       else
         array.push(node.data)
       end
-      preorder(node.left_child, array)
-      preorder(node.right_child, array)
+      preorder(node.left_child, array, &block)
+      preorder(node.right_child, array, &block)
     end
   end
 
-  def postorder(node = @root, array = [])
+  def postorder(node = @root, array = [], &block)
     if node.nil?
       array
     else
-      postorder(node.left_child, array)
-      postorder(node.right_child, array)
+      postorder(node.left_child, array, &block)
+      postorder(node.right_child, array, &block)
       if block_given?
         yield node
       else
