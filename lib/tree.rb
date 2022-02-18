@@ -5,7 +5,7 @@ class Tree
     @data = array.uniq.sort
     p @data
     @data_end = @data.length - 1
-    bst = build_tree(@data, @data_end)
+    @tree = build_tree(@data, @data_end)
   end
 
   def build_tree(array, array_end, array_start = 0)
@@ -151,6 +151,14 @@ class Tree
       false
     else
       true
+    end
+  end
+
+  def rebalance
+    unless balanced?
+      tree_array = level_order
+      tree_array_end = tree_array.length - 1
+      @tree = build_tree(tree_array, tree_array_end)
     end
   end
 
