@@ -129,17 +129,21 @@ class Tree
     end
   end
 
-  def height(node = @root, count = 0, deepest_leaft = level_order(node).last)
+  def height(node = @root, count = 0, deepest_leaf = level_order(node).last)
     nil if node.nil?
-    if deepest_leaft == node.data
+    if deepest_leaf == node.data
       count
-    elsif deepest_leaft < node.data
+    elsif deepest_leaf < node.data
       count += 1
-      height(node.left_child, count)
-    elsif deepest_leaft > node.data
+      height(node.left_child, count, deepest_leaf)
+    elsif deepest_leaf > node.data
       count += 1
-      height(node.right_child, count)
+      height(node.right_child, count, deepest_leaf)
     end
+  end
+
+  def depth(node)
+    height(@root, 0, node.data)
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
