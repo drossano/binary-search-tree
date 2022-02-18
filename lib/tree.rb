@@ -129,6 +129,19 @@ class Tree
     end
   end
 
+  def height(node = @root, count = 0, deepest_leaft = level_order(node).last)
+    nil if node.nil?
+    if deepest_leaft == node.data
+      count
+    elsif deepest_leaft < node.data
+      count += 1
+      height(node.left_child, count)
+    elsif deepest_leaft > node.data
+      count += 1
+      height(node.right_child, count)
+    end
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right_child, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right_child
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
