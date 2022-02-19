@@ -1,5 +1,5 @@
 require_relative 'node'
-require 'pry-byebug'
+
 class Tree
   def initialize(array)
     @data = array.uniq.sort
