@@ -1,15 +1,17 @@
-require_relative 'node'
+# frozen_string_literal: true
 
+require_relative 'node'
+# Creates and stores a binary search tree
 class Tree
   def initialize(array)
     @data = array.uniq.sort
-    @data
     @data_end = @data.length - 1
     @bst = build_tree(@data, @data_end)
   end
 
   def build_tree(array, array_end, array_start = 0)
     return nil if array_start > array_end
+
     mid = (array_start + array_end) / 2
     root = Node.new(array[mid])
     root.left_child = build_tree(array, mid - 1, array_start)
@@ -147,19 +149,15 @@ class Tree
   end
 
   def balanced?
-    if (height(@root.left_child) - height(@root.right_child)).abs() > 1
-      false
-    else
-      true
-    end
+    (height(@root.left_child) - height(@root.right_child)).abs < 1
   end
 
   def rebalance
-    unless balanced?
-      tree_array = inorder
-      tree_array_end = tree_array.length - 1
-      @bst = build_tree(tree_array, tree_array_end)
-    end
+    return if balanced?
+
+    tree_array = inorder
+    tree_array_end = tree_array.length - 1
+    @bst = build_tree(tree_array, tree_array_end)
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)
